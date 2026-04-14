@@ -1,4 +1,6 @@
 
+using System.Text.Json;
+
 namespace FindGenderAPI
 {
     public class Program
@@ -9,7 +11,14 @@ namespace FindGenderAPI
 
             // Add services to the container.
 
-            builder.Services.AddControllers();
+
+
+            builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower;
+    });
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -26,7 +35,7 @@ namespace FindGenderAPI
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
+            app.UseCors(policy => policy.AllowAnyOrigin());
 
             app.MapControllers();
 
